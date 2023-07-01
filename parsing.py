@@ -8,6 +8,6 @@ def scrap():
         'DOWNLOAD_DELAY': 2,
     })
     process.crawl(PerekrestokSpider)
-    # process.crawl(AromatniyMirSpider)  # FIX
+    # process.crawl(AromatniyMirSpider)  # FIX FIRST
     # process.crawl(SimpleWineSpider)  # FIX
     process.start()
