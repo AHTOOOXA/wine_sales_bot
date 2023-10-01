@@ -6,28 +6,6 @@ from vivino_scraper import *
 from datetime import date
 
 
-def __get_config(filename='database.ini', section='postgresql'):
-    # create a parser
-    parser = ConfigParser()
-    # read config file
-    parser.read(filename)
-
-    # get section, default to postgresql
-    config = {}
-    if parser.has_section(section):
-        params = parser.items(section)
-        for param in params:
-            config[param[0]] = param[1]
-    else:
-        raise Exception('Section {0} not found in the {1} file'.format(section, filename))
-
-    return config
-
-
-# CHANGE SOMEHOW, CANT IMPORT DB TO TEST
-db_config = __get_config()
-
-
 class MetaSingleton(type):
     _instances = {}
 
@@ -38,10 +16,26 @@ class MetaSingleton(type):
 
 
 class Database(metaclass=MetaSingleton):
+    _FILE_NAME = 'database.ini'
+    _SECTION = 'postgresql'
+
+    def _get_config(self):
+        parser = ConfigParser()
+        parser.read(self._FILE_NAME)
+        # get section, default to postgresql
+        config = {}
+        if parser.has_section(self._SECTION):
+            params = parser.items(self._SECTION)
+            for param in params:
+                config[param[0]] = param[1]
+        else:
+            raise Exception('Section {0} not found in the {1} file'.format(self._SECTION, self._FILE_NAME))
+        return config
+
     def __init__(self):
         self.conn = None  # type: psycopg2.connection
         self.cur = None  # type: psycopg2.cursor
-        self.config = db_config
+        self.config = self._get_config()
         self.create_connection()
 
     def __del__(self):

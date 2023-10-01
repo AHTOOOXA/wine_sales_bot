@@ -1,13 +1,15 @@
 from scrapy.crawler import CrawlerProcess
-from spider import PerekrestokSpider, AromatniyMirSpider, SimpleWineSpider
+from spiders.amwine_spider import AMWineSpider
+from spiders.perekrestok_spider import PerekrestokSpider
+from spiders.simplewine_spider import SimpleWineSpider
 
 
 def scrap():
-    process = CrawlerProcess(settings={
-        'ITEM_PIPELINES': {'pipelines.SavingToPostgresPipeline': 200},
-        'DOWNLOAD_DELAY': 2,
-    })
+    settings = {
+        'ITEM_PIPELINES': {'pipelines.SavingToDatabasePipeline': 200},
+    }
+    process = CrawlerProcess(settings=settings)
+    process.crawl(AMWineSpider)
     process.crawl(PerekrestokSpider)
-    # process.crawl(AromatniyMirSpider)  # FIX FIRST
-    # process.crawl(SimpleWineSpider)  # FIX
+    process.crawl(SimpleWineSpider)
     process.start()

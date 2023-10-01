@@ -1,13 +1,13 @@
-import scrapy
+from scrapy import Item, Field
 
 
-class WineItem(scrapy.Item):
-    name = scrapy.Field()
-    price_new = scrapy.Field()
-    price_old = scrapy.Field()
-    rating = scrapy.Field()
-    shop = scrapy.Field()
-    url = scrapy.Field()
-    updated = scrapy.Field()
-    posted = scrapy.Field()
-    tags = scrapy.Field()
+class WineItem(Item):
+    name = Field()
+    price_new = Field()
+    price_old = Field()
+    rating = Field()
+    shop = Field()
+    url = Field()
+    updated = Field()
+    posted = Field()
+    tags = Field()
