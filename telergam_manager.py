@@ -12,10 +12,19 @@ class Telegram429(Exception):
     pass
 
 
-def post_to_telegram(wine) -> bool:
+def post(text):
+    url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
+    data = {'chat_id': CHANNEL, 'text': text, 'parse_mode': 'HTML'}
+    try:
+        response = requests.post(url=url, json=data)
+    except Exception as e:
+        logging.error(e)
+
+
+def post_wine(wine) -> bool:
     url = f'https://api.telegram.org/bot{TOKEN}/sendPhoto'
     logging.info(f"Trying to post wine {wine[0]}")
-    text = f"""<b>{wine[0]}</b>\n\n{wine[1]} ₽   <s>{wine[2]} ₽</s>\nРейтинг на Vivino: {wine[7]} <i>(число оценок: {wine[8]})</i>\n\n<a href="{wine[4]}">Страница в магазине</a>\n<a href="{wine[10]}">Страница на Vivino</a>\n\n{wine[3]}"""
+    text = f"""<b>{wine[0]}</b>\n\n{wine[1]} ₽   <s>{wine[2]} ₽</s>\nРейтинг на Vivino: {wine[6]} <i>(число оценок: {wine[7]})</i>\n\n<a href="{wine[5]}">Страница в магазине</a>\n<a href="{wine[8]}">Страница на Vivino</a>\n\n{wine[4]}"""
     data = {'chat_id': CHANNEL, 'photo': wine[9], 'caption': text, 'parse_mode': 'HTML'}
     while True:
         try:

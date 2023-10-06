@@ -22,5 +22,4 @@ class PerekrestokSpider(scrapy.Spider):
             wine_loader.add_value('shop', '#Perekrestok')
             wine_loader.add_css('url', 'div > a ::attr(href)')
             wine_loader.add_value('updated', date.today().strftime("%Y-%m-%d"))
-            wine_loader.add_value('posted', '0')
             yield wine_loader.load_item()

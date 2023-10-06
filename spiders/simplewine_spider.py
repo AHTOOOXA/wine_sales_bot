@@ -7,7 +7,6 @@ from datetime import date
 class SimpleWineSpider(scrapy.Spider):
     name = 'simplewine'
     allowed_domains = ['simplewine.ru']
-    start_urls = ['http://simplewine.ru/']
 
     start_urls = [
         f'https://simplewine.ru/catalog/vino/filter/sale-1/page{i}' for i in range(15)
@@ -24,5 +23,4 @@ class SimpleWineSpider(scrapy.Spider):
             wine_loader.add_value('shop', '#SimpleWine')
             wine_loader.add_css('url', 'article > div.product-snippet__top > div.product-snippet__left > a ::attr(href)')
             wine_loader.add_value('updated', date.today().strftime("%Y-%m-%d"))
-            wine_loader.add_value('posted', '0')
             yield wine_loader.load_item()
