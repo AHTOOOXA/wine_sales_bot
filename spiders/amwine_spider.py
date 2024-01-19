@@ -7,7 +7,7 @@ from datetime import date
 class AMWineSpider(scrapy.Spider):
     name = 'amwine'
     allowed_domains = ['amwine.ru']
-    start_urls = [f'https://amwine.ru/catalog/rasprodazha/filter/type_drink-is-vino/']
+    start_urls = ['https://amwine.ru/catalog/rasprodazha/filter/type_drink-is-vino/']
     start_urls += [f'https://amwine.ru/catalog/rasprodazha/filter/type_drink-is-vino/page={i}' for i in range(2, 15)]
 
     def parse(self, response):
