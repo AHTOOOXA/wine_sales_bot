@@ -27,3 +27,12 @@ class AMWineItemLoader(ItemLoader):
     price_new_in = Compose(TakeFirst(), lambda x: float(x.strip()))
     price_old_in = Compose(TakeFirst(), lambda x: float(x.strip()))
     url_in = MapCompose(lambda x: f"https://amwine.ru{x}")
+
+
+class MetroItemLoader(ItemLoader):
+    # Results are db types ready
+    default_output_processor = TakeFirst()
+    name_in = MapCompose(lambda x: x.strip()[5:-7])
+    price_new_in = MapCompose(lambda x: float(x.replace(u'\xa0', '')))
+    price_old_in = MapCompose(lambda x: float(x.replace(u'\xa0', '')))
+    url_in = MapCompose(lambda x: f"online.metro-cc.ru{x}")
